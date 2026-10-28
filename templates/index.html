@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <title>Django Cinema</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="container mt-3">
+
+    <header>
+        <div class="alert alert-primary text-center display-3">
+            DJANGO CINEMA
+        </div>
+    </header>
+
+    <main>
+
+        {% if funciones %}
+
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+
+            {% for f in funciones %}
+
+            <div class="col">
+                <div class="card bg-dark text-white h-100">
+
+                    <img src="/media/{{ f.pelicula.imagen }}"
+                         class="card-img-top"
+                         alt="Película">
+
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            {{ f.pelicula.nombre }}
+                        </h4>
+
+                        <p class="card-text">
+                            {{ f.fecha }} {{ f.hora }}
+                        </p>
+
+                        <p class="card-text">
+                            Sala: {{ f.sala }}
+                        </p>
+
+                        <p class="card-text">
+                            Asientos disponibles:
+                            {{ f.asientos_disponibles }}
+                        </p>
+
+                        {% if f.asientos_disponibles == 0 %}
+
+                        <a class="btn btn-danger w-100 disabled">
+                            Agotados
+                        </a>
+
+                        {% else %}
+
+                        <a class="btn btn-primary w-100"
+                           href="/comprar/{{ f.id }}">
+                            Comprar
+                        </a>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-warning text-center">
+            <strong>No hay funciones disponibles</strong>
+        </div>
+
+        {% endif %}
+
+    </main>
+
+    <div class="alert alert-dark mt-3 text-center">
+        Todos los derechos reservados
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
